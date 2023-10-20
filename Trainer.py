@@ -49,10 +49,11 @@ dataloader = DataLoader(dataset=dataset, batch_size= 16, shuffle=True)
 for epoch in range(numEpochs):
 
     for idx, (batch,real) in enumerate(dataloader):
+
         ## training the discriminator here
-        fakeData = {}
+        fakeData = {} # we construct the fake data, and were going to use it twice
         fakeData["attention_mask"] = batch["attention_mask"].squeeze(1)  #The discriminator will know the right attention mask
-        batch["input_ids"] =  batch["input_ids"].squeeze(1)[:,:truncation]
+        batch["input_ids"] =  batch["input_ids"].squeeze(1)[:,:truncation] # truncating the input
         batch["attention_mask"] = batch["attention_mask"].squeeze(1)[:,:truncation]
         discOutsReal = discriminator(batch)  #tensor like, shaped (batchsize, 1)
         fake = generator.generateText(batch, dataset.maxLength) #tensor like, shaped (batchSize, maxLength)
@@ -67,11 +68,19 @@ for epoch in range(numEpochs):
         
         ## training the generator
 
-        output = discriminator(fakeData) # here the discriminator has been trained once
+        output = discriminator(fakeData) # here the discriminator has been trained once, so this value is different from discOutsFake
         lossGenerator = lossFunc(output, torch.ones_like(output))
         generator.zero_grad()
         lossGenerator.backward()
         optGen.step()
+
+        if idx == 0:
+            print("Epoch number ", epoch, " loss Gen: ", lossGenerator, " loss Disc: ", finalLoss)
+    
+    # once we trained the model for a single epoch, were going to save both models to a local dir
+
+    torch.save(generator.state_dict(), './modelParams/generator' + epoch + ".pth")
+    torch.save(discriminator.state_dict(), './modelParams/discriminator' + epoch + ".pth")
 
 
 
