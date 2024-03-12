@@ -73,7 +73,7 @@ for epoch in range(numEpochs):
         generator.zero_grad()
         lossGenerator.backward()
         optGen.step()
-
+        print(lossGenerator)
         if idx == 0:
             print("Epoch number ", epoch, " loss Gen: ", lossGenerator, " loss Disc: ", finalLoss)
     
