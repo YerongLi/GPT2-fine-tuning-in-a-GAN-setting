@@ -32,9 +32,9 @@ or ROUGE
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(device)
-lr = 3e-4
+lr = 3e-2
 batchSize = 32
-numEpochs = 50
+numEpochs = 500
 truncation = 7 # Well cut the input wrt to this parameter and let the generator produce text from there
 dataset = GutenbergDataset()
 generator = GANGenerator()
@@ -67,13 +67,16 @@ for epoch in range(numEpochs):
         optDisc.step()
         
         ## training the generator
-
+        finalLoss = (lossDiscriminatorReal + lossDiscriminatorFake) / 2
+        print("Loss of Discriminator (Real): {:.2f}".format(lossDiscriminatorReal))
+        print("Loss of Discriminator (Fake): {:.2f}".format(lossDiscriminatorFake))
+        print("Final Loss: {:.2f}".format(finalLoss))
         output = discriminator(fakeData) # here the discriminator has been trained once, so this value is different from discOutsFake
         lossGenerator = lossFunc(output, torch.ones_like(output))
         generator.zero_grad()
         lossGenerator.backward()
         optGen.step()
-        print(finalLoss)
+
         if idx == 0:
             print("Epoch number ", epoch, " loss Gen: ", lossGenerator, " loss Disc: ", finalLoss)
     
