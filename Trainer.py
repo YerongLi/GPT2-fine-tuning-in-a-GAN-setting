@@ -32,7 +32,8 @@ or ROUGE
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(device)
-lr = 3e-3
+# lr = 3e-3
+lr = 3e-4
 batchSize = 32
 numEpochs = 500
 truncation = 7 # Well cut the input wrt to this parameter and let the generator produce text from there
