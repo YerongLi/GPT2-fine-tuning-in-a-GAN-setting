@@ -63,7 +63,7 @@ for epoch in range(numEpochs):
         lossDiscriminatorReal = lossFunc(discOutsReal, torch.ones_like(discOutsReal))   # lossFunc(disc(real), torch.oneslike(disc(real)))
         lossDiscriminatorFake = lossFunc(discOutsFake, torch.zeros_like(discOutsFake))
         finalLoss = (lossDiscriminatorReal + lossDiscriminatorFake) / 2
-        if finalLoss > 0.1:
+        if finalLoss > 0.5:
             discriminator.zero_grad()
             finalLoss.backward(retain_graph = True) # adding the retain parameter we ensure that we can use the fake text also for the generator
             optDisc.step()
