@@ -11,7 +11,7 @@ from transformers import GPT2LMHeadModel, GPT2Tokenizer
 class GutenbergDataset(Dataset):
     def __init__(self) -> None:
         super().__init__()
-        self.tokenizer =GPT2Tokenizer.from_pretrained("gpt2", padding_side = "right")
+        self.tokenizer =GPT2Tokenizer.from_pretrained("gpt2", padding_side = "left")
         self.tokenizer.pad_token = self.tokenizer.eos_token
         self.maxLength = 20
         self.createListOfSentence()
