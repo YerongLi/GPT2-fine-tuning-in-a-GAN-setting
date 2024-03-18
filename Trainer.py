@@ -68,15 +68,18 @@ for epoch in range(numEpochs):
         
         ## training the generator
         finalLoss = (lossDiscriminatorReal + lossDiscriminatorFake) / 2
-        print("Loss of Discriminator (Real): {:.2f}".format(lossDiscriminatorReal))
-        print("Loss of Discriminator (Fake): {:.2f}".format(lossDiscriminatorFake))
-        print("Final Loss: {:.2f}".format(finalLoss))
+        # print("Loss of Discriminator (Real): {:.2f}".format(lossDiscriminatorReal))
+        # print("Loss of Discriminator (Fake): {:.2f}".format(lossDiscriminatorFake))
+        # print("Final Loss: {:.2f}".format(finalLoss))
         output = discriminator(fakeData) # here the discriminator has been trained once, so this value is different from discOutsFake
         lossGenerator = lossFunc(output, torch.ones_like(output))
         generator.zero_grad()
         lossGenerator.backward()
         optGen.step()
-
+        print("discriminator Loss: {:.2f}".format(finalLoss))
+        print("generator Loss: {:.2f}".format(lossGenerator))
+        generator.zero_grad()
+        
         if idx == 0:
             print("Epoch number ", epoch, " loss Gen: ", lossGenerator, " loss Disc: ", finalLoss)
     
