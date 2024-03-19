@@ -52,6 +52,8 @@ for epoch in range(numEpochs):
     for idx, (batch,real) in enumerate(dataloader):
         print('batch -- real')
         print(batch)
+        print('real')
+
         print(real)
         ## training the discriminator here
         fakeData = {} # we construct the fake data, and were going to use it twice
