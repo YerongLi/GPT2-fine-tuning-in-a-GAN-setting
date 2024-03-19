@@ -50,7 +50,9 @@ dataloader = DataLoader(dataset=dataset, batch_size= 16, shuffle=True)
 for epoch in range(numEpochs):
 
     for idx, (batch,real) in enumerate(dataloader):
-
+        print('batch -- real')
+        print(batch)
+        print(real)
         ## training the discriminator here
         fakeData = {} # we construct the fake data, and were going to use it twice
         fakeData["attention_mask"] = batch["attention_mask"].squeeze(1)  #The discriminator will know the right attention mask
