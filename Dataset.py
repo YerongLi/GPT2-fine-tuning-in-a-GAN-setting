@@ -60,8 +60,8 @@ class GutenbergDataset(Dataset):
             concat_input = torch.ones([1,fillNumber], dtype=torch.long) * self.tokenizer.eos_token_id
             concat_attention = torch.zeros([1,fillNumber], dtype=torch.long)
 
-            padded_inputs = torch.cat(concat_input+[tokenizedSentence["input_ids"]], dim = 1)
-            padded_attention = torch.cat([tokenizedSentence["attention_mask"], concat_attention], dim = 1)
+            padded_inputs = torch.cat([concat_input, tokenizedSentence["input_ids"]], dim = 1)
+            padded_attention = torch.cat([concat_attention,tokenizedSentence["attention_mask"]], dim = 1)
             
             tokenizedSentence["input_ids"] = padded_inputs
             tokenizedSentence["attention_mask"] = padded_attention
