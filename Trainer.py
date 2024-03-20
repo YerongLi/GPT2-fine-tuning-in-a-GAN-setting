@@ -51,7 +51,8 @@ for epoch in range(numEpochs):
 
     for idx, (batch,real) in enumerate(dataloader):
         print('batch -- real')
-        print(dataset.tokenizer.decode(batch['input_ids'][0], skip_special_tokens=True))
+        print(batch)
+        print(dataset.tokenizer.decode(batch[0], skip_special_tokens=True))
         print('real')
 
         print(real)
