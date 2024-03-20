@@ -55,7 +55,7 @@ for epoch in range(numEpochs):
         print(dataset.tokenizer.decode(batch['input_ids'][0][0], skip_special_tokens=True))
         print('real')
 
-        print(real)
+        print(real[0])
         ## training the discriminator here
         fakeData = {} # we construct the fake data, and were going to use it twice
         fakeData["attention_mask"] = batch["attention_mask"].squeeze(1)  #The discriminator will know the right attention mask
